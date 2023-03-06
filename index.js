@@ -1,28 +1,39 @@
 #!/usr/bin/env node
 const interview = require('./src/interview.js');
+ticker = 'USDT';
+fiat = 'KES';
+payTypes = 'MPesaKenya';
 const buy = {
-  ticker: 'USDT',
-  fiat: 'KES',
+  ticker: ticker,
+  fiat: fiat,
   operation: 'BUY',
-  payTypes: 'MPesaKenya',
+  payTypes: payTypes,
 };
 const sell = {
-  ticker: 'USDT',
-  fiat: 'KES',
+  ticker: ticker,
+  fiat: fiat,
   operation: 'SELL',
-  payTypes: 'MPesaKenya',
+  payTypes: payTypes,
 };
-
 (async () => {
   let buyd = await interview(buy);
   let selld = await interview(sell);
-  console.log({
-    selld,
-    buyd,
-  });
-  console.log(`Buy at: ${buyd['Minimum price']}`);
-  console.log(`Sell at: ${selld['Maximum price']}`);
+  buyprice = buyd['Minimum price'];
+  sellprice = selld['Maximum price'];
   profit = selld['Maximum price'] - buyd['Minimum price'];
-  console.log(`profit margin: ${profit}`);
+  buypricemedian = buyd['Median price'];
+  sellpricemedian = selld['Median price'];
+  profitmedian = selld['Median price'] - buyd['Median price'];
+  console.log({
+    ticker,
+    fiat,
+    payTypes,
+    buyprice: buyprice,
+    sellprice,
+    profit,
+    buypricemedian,
+    sellpricemedian,
+    profitmedian,
+  });
   process.exit(0);
 })();

@@ -1,18 +1,7 @@
 const fetchP2PData = require('./utils/fetchP2PData.js');
 const median = require('./utils/median.js');
-const inquirer = require('inquirer');
-const chalk = require('chalk');
-const log = console.log;
 const interview = async (answers = null) => {
   let totalPrices = [];
-  log(
-    `${chalk.hex('#ffd654')(`⌥`)} ${chalk
-      .hex('#f0b909')
-      .bold(`Collecting ${answers.operation} data for you`)}`
-  );
-
-  const ui = new inquirer.ui.BottomBar();
-  ui.updateBottomBar(`${chalk.grey(`🔍  Fetching page 1`)} \n`);
 
   const firstPage = await fetchP2PData(
     1,
@@ -27,9 +16,6 @@ const interview = async (answers = null) => {
     const totalElements = await pagesToRun.reduce(async (prev, _, idx) => {
       const accData = await prev;
       const page = idx + 2;
-      ui.updateBottomBar(
-        `${chalk.grey(`🔍  Fetching page ${page}/${totalPages}`)} \n`
-      );
       const pageResult = await fetchP2PData(
         page,
         answers.fiat,
